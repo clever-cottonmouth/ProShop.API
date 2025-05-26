@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import express from "express"
 import cors from "cors"
@@ -5,7 +6,9 @@ import cookieParser from "cookie-parser";
 import logger from './utils/logger.js';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json' assert { type: 'json' };
+
+const swaggerFile = fs.readFileSync(new URL('./swagger.json', import.meta.url), 'utf8');
+const swaggerDocument = JSON.parse(swaggerFile);
 import { notFound, errorHandler } from './middleware/error.middleware.js';
 const morganFormat = ':method :url :status :response-time ms';
 const app = express()
